@@ -1,0 +1,196 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  /** Máximo ancho del panel (ej: "560px", "40rem"). */
+  maxWidth?: string;
+  /** Color principal HUD (hex/rgb) */
+  color?: string;
+  /** Opacidad del panel (0–1) para ver el universo detrás */
+  opacity?: number;
+}
+
+const {
+  title,
+  subtitle,
+  maxWidth = "540px",
+  color = "#00ff66",
+  opacity = 0.10,
+} = Astro.props;
+---
+
+<div
+  class="hud"
+  role="region"
+  aria-label={title ? `Panel ${title}` : 'Panel HUD'}
+  style={`--hud:${color};--panel-max:${maxWidth};--alpha:${opacity};`}
+>
+  <div class="decals">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+
+  <p class="hud__subtitle">Bienvenid@s al sitio de</p>
+  {title && <h2 class="hud__title">{title}</h2>}
+  {subtitle && <p class="hud__subtitle">{subtitle}</p>}
+
+  <div class="hud__content">
+    <slot />
+  </div>
+
+  <!-- Esquinas estilo bracket -->
+  <span class="corner tl"></span>
+  <span class="corner tr"></span>
+  <span class="corner bl"></span>
+  <span class="corner br"></span>
+
+  <!-- Barrido tipo radar -->
+  <span class="sweep" aria-hidden="true"></span>
+</div>
+
+<style>
+  /* Contenedor principal */
+  .hud{
+    position: relative;
+    width: min(92vw, var(--panel-max, 540px));
+    padding: clamp(16px, 2.8vw, 28px);
+    border: 2px solid rgba(0,255,0,.55); /* fallback */
+    border-color: color-mix(in srgb, var(--hud), transparent 45%);
+    border-radius: 14px;
+    color: var(--hud);
+    text-align: center;
+    background: rgba(0,255,0,0.08); /* fallback */
+    background: color-mix(in srgb, var(--hud) calc(var(--alpha, .10) * 100%), transparent);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--hud), transparent 60%);
+    backdrop-filter: blur(4px);
+    overflow: hidden;
+    isolation: isolate; /* para overlays */
+  }
+
+  .hud__title{
+    margin: .25rem 0 .25rem;
+    font-size: clamp(18px, 3.4vw, 26px);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px color-mix(in srgb, var(--hud), transparent 60%);
+  }
+  .hud__subtitle{
+    margin: 0 0 .50rem;
+    font-size: clamp(12px, 2.4vw, 14px);
+    color: color-mix(in srgb, var(--hud), white 10%);
+    opacity: .85;
+  }
+
+  .hud__content :where(p){
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* Estilo por defecto para enlaces dentro del HUD */
+  .hud :where(a){
+    display:inline-block;
+    margin-top:.8rem;
+    padding:.5rem 1rem;
+    color: var(--hud);
+    text-decoration:none;
+    border:1px dashed color-mix(in srgb, var(--hud), transparent 35%);
+    border-radius:10px;
+    background: color-mix(in srgb, var(--hud) 12%, transparent);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--hud), transparent 75%);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .hud :where(a:hover){
+    transform: translateY(-1px);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--hud), transparent 55%);
+    border-color: color-mix(in srgb, var(--hud), transparent 10%);
+  }
+
+  /* Grid animado (fondo) */
+  .hud::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--hud), transparent 85%) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--hud), transparent 85%) 1px, transparent 1px);
+    background-size: 38px 38px, 38px 38px;
+    opacity:.22;
+    animation: gridMove 24s linear infinite;
+    z-index:-1;
+  }
+
+  /* Scanlines suaves */
+  .hud::after{
+    content:"";
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0 2px,
+      color-mix(in srgb, var(--hud), transparent 80%) 2px 3px
+    );
+    opacity:.16;
+    animation: scan 8s linear infinite;
+    pointer-events:none;
+    z-index:2;
+  }
+
+  /* Barrido tipo radar */
+  .sweep{
+    position:absolute; inset:-20% -60%;
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--hud), transparent 70%), transparent 60%);
+    mix-blend-mode: screen;
+    animation: sweep 6s linear infinite;
+    z-index:1;
+    pointer-events:none;
+  }
+
+  /* Esquinas decorativas */
+  .corner{
+    position:absolute; width:22px; height:22px;
+    border:2px solid color-mix(in srgb, var(--hud), transparent 20%);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--hud), transparent 60%));
+  }
+  .corner.tl{ top:-8px; left:-8px; border-right:none; border-bottom:none; border-radius:8px 0 0 0;}
+  .corner.tr{ top:-8px; right:-8px; border-left:none; border-bottom:none; border-radius:0 8px 0 0;}
+  .corner.bl{ bottom:-8px; left:-8px; border-right:none; border-top:none; border-radius:0 0 0 8px;}
+  .corner.br{ bottom:-8px; right:-8px; border-left:none; border-top:none; border-radius:0 0 8px 0;}
+
+  /* Pequeños indicadores superiores */
+  .decals{
+    position:absolute; top:8px; right:10px; display:flex; gap:6px; z-index:3;
+  }
+  .decals .dot{
+    width:6px; height:6px; border-radius:50%;
+    background: color-mix(in srgb, var(--hud), white 10%);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--hud), transparent 40%);
+    animation: blink 2.4s infinite ease-in-out;
+  }
+  .decals .dot:nth-child(2){ animation-delay:.5s; }
+  .decals .dot:nth-child(3){ animation-delay:1s; }
+
+  /* Animaciones */
+  @keyframes gridMove{
+    from{ background-position: 0 0, 0 0; }
+    to  { background-position: 80px 80px, 0 0; }
+  }
+  @keyframes scan{
+    0%,20% { opacity:.14 }
+    22%    { opacity:.22 }
+    24%    { opacity:.14 }
+    60%    { opacity:.12 }
+    100%   { opacity:.14 }
+  }
+  @keyframes sweep{
+    from{ transform: translateX(-55%) }
+    to  { transform: translateX(55%) }
+  }
+  @keyframes blink{
+    0%,100%{ opacity:.6 }
+    50%    { opacity:1 }
+  }
+
+  /* Responsivo */
+  @media (max-width: 640px){
+    .hud{ padding: clamp(14px, 4vw, 20px); }
+    .hud::before{ background-size: 28px 28px, 28px 28px; }
+  }
+</style>
