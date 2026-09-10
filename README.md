@@ -1,4 +1,4 @@
-# 🌌 AVX Informática — Sitio Web en Astro
+# AVX Informática — sitio estático en Astro
 
 Este proyecto es la **réplica en Astro** del sitio de [AVX.cl](https://avx.cl), diseñado como una experiencia inmersiva inspirada en el universo:  
 un **sol giratorio** (logo AVX) flotando en el espacio y un **visor HUD futurista** donde se despliega la información y navegación del sitio.  
@@ -7,7 +7,27 @@ un **sol giratorio** (logo AVX) flotando en el espacio y un **visor HUD futurist
 
 ---
 
-## 📂 Estructura del proyecto
+## Qué hace
+
+Presenta una pantalla única de marca: fondo espacial, logotipo animado, panel HUD y un enlace de contacto. No se encontró backend, formulario, persistencia ni autenticación en el repositorio.
+
+## Arquitectura resumida
+
+Astro renderiza `src/pages/index.astro`, que compone `Layout.astro` y `Welcome.astro`; este último utiliza `HudPanel.astro`, assets locales y CSS global. El resultado es un sitio estático generado en `dist/`.
+
+## Documentación
+
+La documentación IA First, sus límites de evidencia y guía para agentes están en [docs/README.md](docs/README.md). Empieza allí antes de cambiar el sitio.
+
+## Desarrollo
+
+Ejecuta los comandos desde `avxinformatica-site/`. La configuración y las limitaciones verificadas están en [docs/11-development.md](docs/11-development.md).
+
+## Estado conocido
+
+El proyecto no versiona pruebas, CI/CD ni configuración de hosting. El build es el único control local identificado.
+
+## Estructura histórica
 
 ```text
 /
