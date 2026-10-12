@@ -23,5 +23,4 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# build output
-dist/
+# dist/ SÍ se versiona: DigitalOcean despliega el sitio desde esa carpeta.

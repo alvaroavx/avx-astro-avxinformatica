@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#020711" />
+    <meta name="description" content="AVX Vector Field: arcade espacial inspirado en Asteroids." />
+    <title>AVX Vector Field</title>
+    <link rel="stylesheet" href="styles/variables.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/game.css" />
+  </head>
+  <body>
+    <main id="game-shell" class="game" data-theme="green" aria-labelledby="game-title">
+      <canvas id="game-canvas" class="game__canvas" aria-label="Campo de juego. En teclado usa flechas o WASD y espacio. En táctil, usa el mando izquierdo para volar y el gatillo derecho para disparar."></canvas>
+
+      <header id="game-hud" class="hud" aria-label="Estado de partida" aria-hidden="true">
+        <div class="hud__brand"><span>AVX</span> VECTOR FIELD</div>
+        <div class="hud__metrics">
+          <div class="hud__metric"><span class="hud__label">DIFICULTAD</span><output id="difficulty-status">NORMAL</output></div>
+          <div class="hud__metric"><span class="hud__label">TIEMPO</span><output id="mission-time">00:00</output></div>
+          <div class="hud__metric"><span class="hud__label">OLEADA</span><output id="wave">01</output></div>
+          <div class="hud__metric"><span class="hud__label">PUNTAJE</span><output id="score">000000</output></div>
+          <div class="hud__metric"><span class="hud__label">RÉCORD</span><output id="high-score">000000</output></div>
+          <div class="hud__metric"><span class="hud__label">VIDAS</span><output id="lives">● ● ●</output></div>
+          <div class="hud__metric"><span class="hud__label">COMBO</span><output id="combo">×1</output></div>
+        </div>
+      </header>
+
+      <section id="start-screen" class="screen" aria-labelledby="game-title">
+        <p class="screen__eyebrow">SECTOR 07 // DEFENSA VECTORIAL</p>
+        <h1 id="game-title">AVX<br /><span>VECTOR FIELD</span></h1>
+        <p class="screen__lede">ELIGE LA DIFICULTAD DE LA MISIÓN</p>
+        <div class="menu-actions mission-picker" aria-label="Selecciona la dificultad de la misión">
+          <button class="button button--quiet mission-option" data-start-difficulty="easy" type="button" aria-pressed="false"><span class="button__signal">01</span><span class="mission-option__copy"><strong>SOY UN NOVATO</strong><small>FÁCIL</small></span><span class="mission-option__balance" aria-hidden="true"></span></button>
+          <button class="button button--quiet mission-option" data-start-difficulty="normal" type="button" aria-pressed="false"><span class="button__signal">02</span><span class="mission-option__copy"><strong>YA SÉ LO QUE HAGO</strong><small>NORMAL</small></span><span class="mission-option__balance" aria-hidden="true"></span></button>
+          <button class="button button--quiet mission-option" data-start-difficulty="hard" type="button" aria-pressed="false"><span class="button__signal">03</span><span class="mission-option__copy"><strong>DAME UN DESAFÍO</strong><small>DIFÍCIL</small></span><span class="mission-option__balance" aria-hidden="true"></span></button>
+        </div>
+        <div class="menu-actions menu-actions--settings">
+          <button id="open-settings-from-menu" class="button button--quiet" type="button"><span class="button__signal">◇</span>CONFIGURACIÓN</button>
+        </div>
+        <div class="screen__controls" aria-label="Controles">
+          <p><kbd>←</kbd><kbd>→</kbd> o <kbd>A</kbd><kbd>D</kbd> girar</p>
+          <p><kbd>↑</kbd> o <kbd>W</kbd> propulsión · <kbd>ESPACIO</kbd> disparar</p>
+          <p>En móvil: usa los controles inferiores.</p>
+        </div>
+      </section>
+
+      <section id="pause-screen" class="screen" hidden aria-live="polite">
+        <p class="screen__eyebrow">TRANSMISIÓN EN PAUSA</p>
+        <h2>PAUSA</h2>
+        <div class="menu-actions">
+          <button id="resume-game" class="button button--primary" type="button"><span class="button__signal">›</span>CONTINUAR</button>
+          <button id="open-settings-from-pause" class="button button--quiet" type="button"><span class="button__signal">◇</span>CONFIGURACIÓN</button>
+          <button id="main-menu" class="button button--quiet" type="button"><span class="button__signal">⌂</span>MENÚ PRINCIPAL</button>
+          <button id="restart-from-pause" class="button button--quiet" type="button"><span class="button__signal">↻</span>REINICIAR MISIÓN</button>
+        </div>
+      </section>
+
+      <section id="settings-screen" class="screen" hidden aria-labelledby="settings-title">
+        <p class="screen__eyebrow">SISTEMA // PERSONALIZACIÓN</p>
+        <h2 id="settings-title">CONFIGURACIÓN</h2>
+        <fieldset class="theme-picker">
+          <legend>COLOR DE LÍNEAS</legend>
+          <button class="theme-option" data-theme-choice="green" type="button" aria-pressed="true"><span class="theme-swatch theme-swatch--green"></span>VERDE AVX</button>
+          <button class="theme-option" data-theme-choice="cyan" type="button" aria-pressed="false"><span class="theme-swatch theme-swatch--cyan"></span>CELESTE</button>
+          <button class="theme-option" data-theme-choice="pink" type="button" aria-pressed="false"><span class="theme-swatch theme-swatch--pink"></span>ROSADO</button>
+          <button class="theme-option" data-theme-choice="yellow" type="button" aria-pressed="false"><span class="theme-swatch theme-swatch--yellow"></span>AMARILLO</button>
+        </fieldset>
+        <fieldset class="theme-picker audio-settings">
+          <legend>AUDIO</legend>
+          <label>VOLUMEN GENERAL <input id="audio-volume" type="range" min="0" max="1" step="0.05" value="0.7" /></label>
+          <label>MÚSICA <input id="music-volume" type="range" min="0" max="0.7" step="0.05" value="0.7" /></label>
+        </fieldset>
+        <div class="menu-actions"><button id="close-settings" class="button button--primary" type="button"><span class="button__signal">‹</span>VOLVER</button></div>
+      </section>
+
+      <section id="wave-intro" class="wave-intro" hidden aria-live="assertive">
+        <p class="screen__eyebrow" id="wave-title">NUEVA OLEADA</p>
+        <p class="wave-intro__count" id="wave-countdown">3</p>
+        <p class="wave-intro__detail" id="wave-detail"></p>
+      </section>
+
+      <aside id="tutorial-hint" class="tutorial-hint" hidden aria-live="polite"></aside>
+
+      <section id="upgrade-screen" class="screen" hidden aria-live="assertive" aria-labelledby="upgrade-title">
+        <h2 id="upgrade-title">ELIGE UNA MEJORA</h2>
+        <div id="upgrade-options" class="upgrade-options"></div>
+      </section>
+
+      <section id="game-over-screen" class="screen" hidden aria-live="assertive">
+        <p class="screen__eyebrow">SEÑAL PERDIDA</p>
+        <h2>MISIÓN FINALIZADA</h2>
+        <p class="screen__lede">Puntaje final: <output id="final-score">000000</output></p>
+        <div class="menu-actions"><button id="restart-game" class="button button--primary" type="button">NUEVA MISIÓN</button><button id="main-menu-from-game-over" class="button button--quiet" type="button">MENÚ PRINCIPAL</button></div>
+      </section>
+
+      <section id="victory-screen" class="screen victory-screen" hidden aria-live="assertive">
+        <div class="victory-crawl">
+          <p class="screen__eyebrow">TRANSMISIÓN DE VICTORIA</p>
+          <h2>FELICITACIONES</h2>
+          <p class="screen__lede victory__status">EL SISTEMA HA SIDO PROTEGIDO</p>
+          <p class="screen__lede">PUNTAJE FINAL: <output id="victory-score">000000</output></p>
+          <div class="menu-actions"><button id="restart-victory" class="button button--primary" type="button">NUEVA MISIÓN</button><button id="main-menu-from-victory" class="button button--quiet" type="button">MENÚ PRINCIPAL</button></div>
+        </div>
+      </section>
+
+      <button id="pause-game" class="pause" type="button" aria-label="Pausar partida" hidden>Ⅱ</button>
+      <button id="audio-toggle" class="audio-toggle" type="button" aria-label="Silenciar sonido" aria-pressed="false" hidden>🔊</button>
+      <div id="touch-controls" class="touch-controls" aria-label="Controles táctiles de cabina" hidden>
+        <div class="flight-stick" id="touch-flight-stick" role="group" aria-label="Mando de vuelo: arrastra hacia arriba para propulsar y hacia los lados para girar">
+          <span class="flight-stick__label" aria-hidden="true">VUELO</span>
+          <span class="flight-stick__axis flight-stick__axis--horizontal" aria-hidden="true"></span>
+          <span class="flight-stick__axis flight-stick__axis--vertical" aria-hidden="true"></span>
+          <span class="flight-stick__thumb" id="touch-flight-thumb" aria-hidden="true"></span>
+        </div>
+        <button id="touch-fire" class="touch-fire" type="button" aria-label="Mantener para disparar">
+          <span aria-hidden="true">✦</span><small>DISPARAR</small>
+        </button>
+      </div>
+      <p class="game__hint" id="wave-message" aria-live="polite"></p>
+      <p class="reinforcement-countdown" id="reinforcement-countdown" aria-live="polite"></p>
+    </main>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

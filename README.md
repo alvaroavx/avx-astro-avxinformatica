@@ -12,7 +12,7 @@ Desde la raíz del repo:
 |---|---|
 | `npm ci` | Instala dependencias (solo `astro`) |
 | `npm run dev` | Servidor local en `localhost:4321` |
-| `npm run build` | Build estático en `dist/` (no versionado) |
+| `npm run build` | Build estático en `dist/` (**versionado**: es lo que despliega DigitalOcean) |
 | `npm run preview` | Sirve el build local |
 
 En `astro dev`, el juego abre en `/vector-field/index.html`. La ruta `/vector-field/` funciona en el build servido.
@@ -42,7 +42,7 @@ En `astro dev`, el juego abre en `/vector-field/index.html`. La ruta `/vector-fi
 - Revisión del contrato BPO antes de publicar "Firma electrónica" en Capacidad.
 - Licencia de Metropolis por confirmar (los archivos no la incluyen).
 - Logo completo en SVG: hoy solo la estrella está vectorizada; el logotipo `<AV.X> INFORMÁTICA_` sigue en PNG de 390 px.
-- Hosting, CI y rollback siguen sin documentar ni versionar. Si se conecta Cloudflare Pages: build `npm run build`, salida `dist`, sin root directory.
+- Deploy: DigitalOcean publica automáticamente el contenido de `dist/` desde git. Antes de cada commit que cambie el sitio, ejecuta `npm run build` y commitea `dist/` junto al código. Falta documentar la configuración exacta de la app en DigitalOcean (rama, carpeta de salida, dominio, rollback).
 - El juego se publica copiándolo a mano a `public/vector-field/`.
 
 ## Documentación

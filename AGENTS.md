@@ -24,7 +24,7 @@ Lee `README.md`, `docs/23-rediseno-2026-10.md` (estado vigente), `docs/README.md
 - Conserva accesibilidad básica: texto alternativo, foco visible y contraste verificable.
 - `public/vector-field/` es una copia del juego; su fuente es el repo `avx-avxinformatica-website-cursor`. No lo edites aquí.
 - No publiques precios, nombres de clientes BPO ni promesas de resultados (ver `../docs/02-negocio-y-web-corporativa.md`).
-- Ejecuta `npm run build` desde la raíz del repo al cambiar el sitio.
+- Ejecuta `npm run build` desde la raíz del repo al cambiar el sitio y commitea `dist/`: DigitalOcean despliega desde ahí.
 - Actualiza los documentos afectados por cambios funcionales o arquitectónicos.
 
 ## Límites conocidos
