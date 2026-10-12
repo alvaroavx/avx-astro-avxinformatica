@@ -1,93 +1,52 @@
-# AVX Informática — sitio estático en Astro
+# AVX Informática — sitio corporativo (Astro)
 
-Este proyecto es la **réplica en Astro** del sitio de [AVX.cl](https://avx.cl), diseñado como una experiencia inmersiva inspirada en el universo:  
-un **sol giratorio** (logo AVX) flotando en el espacio y un **visor HUD futurista** donde se despliega la información y navegación del sitio.  
+Sitio corporativo de [avx.cl](https://avx.cl). Es una página única, estática y oscura que presenta la oferta de AVX: **sitios web administrados** para negocios, artistas y organizaciones. Incluye además el laboratorio **AVX Vector Field** en `/vector-field/`.
 
-## Guía humana
+Rediseño del 12-oct-2026 (dirección "Señal en la oscuridad"): logo y tipografía Metropolis heredados del sitio Angular 2022, el instrumental visual de Vector Field y la jerarquía editorial del prototipo `plan-c`. Detalle en [docs/23-rediseno-2026-10.md](docs/23-rediseno-2026-10.md).
 
-### Qué es, para qué sirve y quiénes lo usan
+## Inicio rápido
 
-Este es el repositorio de una experiencia web estática de marca para **AVX Informática**. Sirve como vitrina visual y punto de contacto: comunica la identidad AVX mediante una única pantalla inmersiva y dirige al visitante al canal de contacto. Está orientado a visitantes del sitio y a las personas que mantienen su presencia digital; no hay cuentas, panel administrativo ni procesos de negocio implementados.
+Desde la raíz del repo:
 
-### Qué contiene y cómo trabaja
+| Comando | Acción |
+|---|---|
+| `npm ci` | Instala dependencias (solo `astro`) |
+| `npm run dev` | Servidor local en `localhost:4321` |
+| `npm run build` | Build estático en `dist/` (no versionado) |
+| `npm run preview` | Sirve el build local |
 
-El producto vive en `avxinformatica-site/` e incluye una aplicación Astro, componentes de interfaz, estilos globales y activos visuales del universo/logo. Astro compone la página de inicio y genera archivos estáticos en `dist/`; el navegador muestra la animación, el HUD y el enlace de contacto. No hay backend, base de datos, formulario que persista información ni autenticación en este repositorio.
+En `astro dev`, el juego abre en `/vector-field/index.html`. La ruta `/vector-field/` funciona en el build servido.
 
-### Funcionalidades y tareas que resuelve
+## Estructura
 
-- Presentar la identidad visual de AVX en una página única.
-- Mostrar fondo espacial, logo animado y panel HUD.
-- Exponer navegación/contenido de marca y un enlace de contacto.
-- Generar una versión estática publicable mediante el build de Astro.
+```text
+/ (raíz del repo)
+├── public/
+│   ├── favicon.svg              # estrella AVX transparente (gris oscuro / claro según tema)
+│   ├── fonts/                   # Metropolis (.otf) y Noto Sans Mono (OFL)
+│   └── vector-field/            # copia publicada del juego (fuente: repo avx-avxinformatica-website-cursor)
+└── src/
+    ├── data/site.ts             # TODO el copy y los datos del sitio
+    ├── assets/brand/            # logo PNG y malla geométrica (Angular 2022)
+    ├── components/              # Header, Hero, SectionHead, Footer, Star
+    ├── layouts/Layout.astro     # <head>, SEO, OG, skip link
+    ├── pages/index.astro        # secciones 01–07 + laboratorio
+    └── styles/global.css        # tokens, tipografía, botones, utilidades
+```
 
-### Trazabilidad humana
+**Para cambiar textos:** edita `src/data/site.ts`. Los componentes no contienen copy de negocio.
 
-- **Solicitante:** no existe una solicitud ni un responsable solicitante identificable en los archivos versionados.
-- **Desarrollo:** el primer commit disponible fue creado por **AVX Informática**; la historia Git no permite atribuir el trabajo completo a una única persona.
-- **Cuándo:** el primer registro Git disponible data del **25 de julio de 2025**. Es la fecha de inicio observable del repositorio, no una prueba de la fecha de diseño o publicación del sitio.
+## Pendientes conocidos
 
-### Qué puede mejorar y oportunidades
-
-Hay oportunidad de convertir la vitrina en una presencia operable: definir contenido y objetivos medibles, validar accesibilidad y rendimiento, añadir pruebas y CI, documentar hosting/TLS/rollback y decidir si el contacto requiere un formulario real con privacidad y antispam. Cualquier ampliación debería preservar la intención visual actual y comenzar por [desarrollo](docs/11-development.md), [seguridad](docs/09-security.md) y el [roadmap](docs/19-improvement-roadmap.md).
-
-
----
-
-## Qué hace
-
-Presenta una pantalla única de marca: fondo espacial, logotipo animado, panel HUD y un enlace de contacto. No se encontró backend, formulario, persistencia ni autenticación en el repositorio.
-
-## Arquitectura resumida
-
-Astro renderiza `src/pages/index.astro`, que compone `Layout.astro` y `Welcome.astro`; este último utiliza `HudPanel.astro`, assets locales y CSS global. El resultado es un sitio estático generado en `dist/`.
+- Autorización para nombrar los trabajos (Barrio Bisquertt, WMD Consultores, Laura Piña). Si alguna falta, usa el campo `anon` de `site.ts`.
+- Revisión del contrato BPO antes de publicar "Firma electrónica" en Capacidad.
+- Licencia de Metropolis por confirmar (los archivos no la incluyen).
+- Logo completo en SVG: hoy solo la estrella está vectorizada; el logotipo `<AV.X> INFORMÁTICA_` sigue en PNG de 390 px.
+- Hosting, CI y rollback siguen sin documentar ni versionar. Si se conecta Cloudflare Pages: build `npm run build`, salida `dist`, sin root directory.
+- El juego se publica copiándolo a mano a `public/vector-field/`.
 
 ## Documentación
 
-La documentación IA First, sus límites de evidencia y guía para agentes están en [docs/README.md](docs/README.md). Empieza allí antes de cambiar el sitio.
-
-## Desarrollo
-
-Ejecuta los comandos desde `avxinformatica-site/`. La configuración y las limitaciones verificadas están en [docs/11-development.md](docs/11-development.md).
-
-## Estado conocido
-
-El proyecto no versiona pruebas, CI/CD ni configuración de hosting. El build es el único control local identificado.
-
-## Estructura histórica
-
-```text
-/
-├── public/                 # Archivos estáticos (favicon, etc.)
-├── src/
-│   ├── assets/             # Imágenes y fondos (logo, universo, etc.)
-│   ├── components/         # Componentes reutilizables
-│   │   ├── Welcome.astro   # Pantalla principal (logo + visor HUD)
-│   │   └── HudPanel.astro  # Panel estilo nave futurista reutilizable
-│   ├── layouts/
-│   │   └── Layout.astro    # Layout global (head, fuentes, estilos globales)
-│   ├── styles/
-│   │   └── global.css      # Estilos globales (fuente Orbitron, fondo, etc.)
-│   └── pages/
-│       └── index.astro     # Página de inicio
-└── package.json
-```
-
-## ⚙️ Comandos básicos
-
-Desde la raíz del proyecto, puedes ejecutar los siguientes comandos:
-
-| Comando                   | Acción                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Instalar dependencias necesarias                 |
-| `npm run dev`             | Iniciar servidor local en `localhost:4321`       |
-| `npm run build`           | Generar build de producción en `./dist/`         |
-| `npm run preview`         | Vista previa local del build generado            |
-| `npm run astro ...`       | Ejecutar comandos CLI Astro como `astro check`   |
-| `npm run astro -- --help` | Mostrar ayuda de Astro CLI                       |
-
-## 🌐 Tecnologías usadas
-
-- **Astro** como framework principal
-- **Bootstrap 5** para estilos base y componentes
-- **CSS moderno**  `clamp`, `backdrop-filter`, `flexbox`
-- **JavaScript moderno** para funcionalidades interactivas
+- [docs/23-rediseno-2026-10.md](docs/23-rediseno-2026-10.md): rediseño vigente.
+- [docs/README.md](docs/README.md): documentación IA First del 10-sep. Describe el sitio anterior al rediseño; consérvala como referencia histórica.
+- Estrategia y negocio: `../docs/` y `../avx-bussiness-plan/` en la carpeta de proyectos AVX.

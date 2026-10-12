@@ -1,0 +1,55 @@
+---
+import Star from './Star.astro';
+import malla from '../assets/brand/malla.png';
+import { site, nav, lab } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="malla" aria-hidden="true" style={`background-image: url(${malla.src})`}></div>
+  <div class="shell foot">
+    <div class="foot-brand">
+      <Star size={36} class="foot-star" />
+      <div>
+        <p class="foot-name">{site.name}</p>
+        <p class="foot-tag">Sitios web administrados. Sin encierro técnico.</p>
+      </div>
+    </div>
+    <nav aria-label="Pie de página">
+      <ul class="foot-links">
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        <li><a href={lab.href}>Laboratorio: Vector Field</a></li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="shell meta">
+    <p>AVX Informática // {site.location} // {year}</p>
+    <a href="#inicio">Volver arriba ↑</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer { position: relative; border-top: 1px solid var(--line); padding-block: 4rem 2rem; overflow: hidden; isolation: isolate; }
+  .malla {
+    position: absolute; inset: 0; z-index: -1; opacity: 0.12;
+    background-repeat: no-repeat; background-size: cover; background-position: center top;
+    transform: scaleY(-1);
+    -webkit-mask-image: linear-gradient(to top, transparent, #000 70%);
+    mask-image: linear-gradient(to top, transparent, #000 70%);
+  }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2.5rem; }
+  .foot-brand { display: flex; gap: 1rem; align-items: center; }
+  .foot-brand :global(.foot-star) { color: #c7c6c6; }
+  .foot-name { font-weight: 800; font-size: 1.1rem; }
+  .foot-tag { color: var(--text-2); font-size: 0.92rem; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 0 2rem; max-width: 40rem; }
+  .foot-links a, .meta a { display: inline-block; padding-block: 0.6rem; }
+  .foot-links a { font-size: 0.9rem; color: var(--text-2); transition: color 0.2s; }
+  .foot-links a:hover { color: var(--accent); }
+  .meta {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-2);
+  }
+  .meta a:hover { color: var(--accent); }
+</style>

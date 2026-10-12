@@ -6,22 +6,25 @@ Sitio estático de presentación de AVX Informática construido con Astro. La ev
 
 ## Antes de trabajar
 
-Lee `README.md`, `docs/README.md`, `docs/02-architecture.md`, `docs/16-conventions.md` y el documento específico del área. La documentación orienta; verifica el código antes de modificar comportamiento.
+Lee `README.md`, `docs/23-rediseno-2026-10.md` (estado vigente), `docs/README.md`, `docs/02-architecture.md`, `docs/16-conventions.md` y el documento específico del área. La documentación orienta; verifica el código antes de modificar comportamiento.
 
 ## Directorios clave
 
-- `avxinformatica-site/src/pages/`: rutas Astro; hoy solo `index.astro`.
-- `avxinformatica-site/src/components/`: composición visual reutilizable.
-- `avxinformatica-site/src/layouts/`: documento HTML común.
-- `avxinformatica-site/src/styles/`: CSS global.
-- `avxinformatica-site/src/assets/` y `public/`: recursos visuales.
+- `src/data/site.ts`: todo el copy del sitio; cambia textos aquí, no en componentes.
+- `src/pages/`: rutas Astro; hoy solo `index.astro`.
+- `src/components/`: composición visual reutilizable.
+- `src/layouts/`: documento HTML común.
+- `src/styles/`: CSS global.
+- `src/assets/` y `public/`: recursos visuales.
 
 ## Reglas
 
 - Mantén el proyecto como sitio estático salvo decisión explícita.
 - No expongas contactos, tokens ni claves nuevos en el cliente.
 - Conserva accesibilidad básica: texto alternativo, foco visible y contraste verificable.
-- Ejecuta `npm run build` desde `avxinformatica-site/` al cambiar el sitio.
+- `public/vector-field/` es una copia del juego; su fuente es el repo `avx-avxinformatica-website-cursor`. No lo edites aquí.
+- No publiques precios, nombres de clientes BPO ni promesas de resultados (ver `../docs/02-negocio-y-web-corporativa.md`).
+- Ejecuta `npm run build` desde la raíz del repo al cambiar el sitio.
 - Actualiza los documentos afectados por cambios funcionales o arquitectónicos.
 
 ## Límites conocidos

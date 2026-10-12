@@ -1,0 +1,8 @@
+---
+// Estrella AVX vectorizada desde logo.light.png (Angular 2022).
+interface Props { size?: number | string; class?: string; title?: string }
+const { size = 32, class: className, title } = Astro.props;
+---
+<svg class={className} width={size} height={size} viewBox="0 0 390 392" role={title ? 'img' : undefined} aria-hidden={title ? undefined : 'true'} aria-label={title}>
+  <path fill="currentColor" fill-rule="evenodd" d="M195 2 262 75 262 130 330 130 390 194 330 260 262 260 262 316 195 390 130 316 130 260 62 260 2 194 62 130 130 130 130 75Z M195 50 130 130 50 194 130 260 195 340 262 260 342 194 262 130Z" />
+</svg>

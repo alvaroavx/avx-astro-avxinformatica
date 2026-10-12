@@ -1,5 +1,7 @@
 # Documentación IA First
 
+> **Aviso (12-oct-2026):** el sitio fue rediseñado. El estado vigente está en [23-rediseno-2026-10.md](23-rediseno-2026-10.md). Los documentos 00–22 describen el sitio anterior (universo + HUD + Orbitron) y se conservan como referencia histórica.
+
 Última revisión documental: 2026-09-10. Estado: reconstruido desde repositorio. Confianza: alta para la estructura cliente; baja para operación y despliegue, que no están versionados.
 
 Esta carpeta reduce la necesidad de leer todo el código antes de orientarse. El código y su comportamiento ejecutable siguen siendo la fuente final de verdad.

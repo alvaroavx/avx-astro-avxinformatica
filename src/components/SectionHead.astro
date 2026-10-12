@@ -1,0 +1,9 @@
+---
+interface Props { id: string; num: string; label: string; title: string; lead?: string; split?: boolean }
+const { id, num, label, title, lead, split = true } = Astro.props;
+---
+<header class:list={['section-head', { 'section-head--split': split }]}>
+  <p class="eyebrow reveal"><span aria-hidden="true">{num} //</span> {label}</p>
+  <h2 class="h2 reveal" id={`${id}-titulo`} style="--d: 60ms">{title}</h2>
+  {lead && <p class="lead reveal" style="--d: 120ms">{lead}</p>}
+</header>

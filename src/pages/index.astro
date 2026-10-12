@@ -1,0 +1,346 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Footer from '../components/Footer.astro';
+import { servicio, audiencias, propiedad, trabajos, proceso, capacidad, contacto, lab, site, mailto } from '../data/site';
+
+const pad = (n: number) => String(n + 1).padStart(2, '0');
+---
+<Layout>
+  <Header />
+  <main id="contenido" tabindex="-1">
+    <Hero />
+
+    <!-- 01 SERVICIO -->
+    <section id="servicio" class="section" aria-labelledby="servicio-titulo">
+      <div class="shell">
+        <SectionHead id="servicio" num="01" label="Servicio" title={servicio.title} lead={servicio.lead} />
+        <ol class="grid-4">
+          {servicio.items.map((item, i) => (
+            <li class="cut-card reveal" style={`--d:${i * 60}ms`}>
+              <div class="cut-inner card">
+                <span class="num" aria-hidden="true">{pad(i)}</span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div class="terms reveal">
+          <div>
+            <h3 class="terms-title">Incluye</h3>
+            <ul class="terms-list">{servicio.incluye.map((t) => <li><span class="mark yes" aria-hidden="true">+</span>{t}</li>)}</ul>
+          </div>
+          <div>
+            <h3 class="terms-title">No prometemos</h3>
+            <ul class="terms-list">{servicio.noPrometemos.map((t) => <li><span class="mark no" aria-hidden="true">×</span>{t}</li>)}</ul>
+          </div>
+          <p class="terms-close">{servicio.cierre}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 PARA QUIÉN -->
+    <section id="para-quien" class="section" aria-labelledby="para-quien-titulo">
+      <div class="shell">
+        <SectionHead id="para-quien" num="02" label="Para quién" title={audiencias.title} lead={audiencias.lead} />
+        <ul class="audiences">
+          {audiencias.items.map((a, i) => (
+            <li class="audience reveal" style={`--d:${i * 60}ms`}>
+              <h3>{a.title}</h3>
+              <p>{a.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 03 PROPIEDAD -->
+    <section id="propiedad" class="section ownership" aria-labelledby="propiedad-titulo">
+      <div class="shell ownership-grid">
+        <div class="ownership-statement">
+          <p class="eyebrow reveal"><span aria-hidden="true">03 //</span> Propiedad</p>
+          <h2 class="display reveal" id="propiedad-titulo" style="--d:60ms">{propiedad.title}</h2>
+          <p class="lead reveal" style="--d:120ms">{propiedad.lead}</p>
+        </div>
+        <div>
+          <ul class="rows">
+            {propiedad.items.map((p, i) => (
+              <li class="row reveal" style={`--d:${i * 60}ms`}>
+                <h3>{p.title}</h3>
+                <p>{p.text}</p>
+              </li>
+            ))}
+          </ul>
+          <p class="quote reveal">{propiedad.cierre}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 TRABAJOS -->
+    <section id="trabajos" class="section" aria-labelledby="trabajos-titulo">
+      <div class="shell">
+        <SectionHead id="trabajos" num="04" label="Trabajos" title={trabajos.title} lead={trabajos.lead} />
+        <ol class="works">
+          {trabajos.items.map((w, i) => (
+            <li class="work reveal" style={`--d:${i * 60}ms`}>
+              <div class="work-main">
+                <p class="work-tag">{w.tag}</p>
+                <h3>{trabajos.mostrarNombres ? w.name : w.anon}</h3>
+              </div>
+              <p class="work-text">{w.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- 05 PROCESO -->
+    <section id="proceso" class="section" aria-labelledby="proceso-titulo">
+      <div class="shell">
+        <SectionHead id="proceso" num="05" label="Proceso" title={proceso.title} lead={proceso.lead} />
+        <ol class="steps">
+          {proceso.items.map((s, i) => (
+            <li class="step reveal" style={`--d:${i * 80}ms`}>
+              <span class="step-node" aria-hidden="true">{pad(i)}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- 06 CAPACIDAD -->
+    <section id="capacidad" class="section" aria-labelledby="capacidad-titulo">
+      <div class="shell">
+        <SectionHead id="capacidad" num="06" label="Capacidad" title={capacidad.title} lead={capacidad.lead} />
+        <div class="capacity">
+          <ul class="grid-3 grid-quiet">
+            {capacidad.items.map((c, i) => (
+              <li class="cut-card reveal" style={`--d:${i * 60}ms`}>
+                <div class="cut-inner card">
+                  <span class="num" aria-hidden="true">{pad(i)}</span>
+                  <h3>{c.title}</h3>
+                  <p>{c.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p class="capacity-note reveal">{capacidad.nota}</p>
+          <article class="product reveal" aria-labelledby="producto-titulo">
+            <span class="badge"><span class="pulse" aria-hidden="true"></span>{capacidad.producto.badge}</span>
+            <h3 id="producto-titulo">{capacidad.producto.name}</h3>
+            <p>{capacidad.producto.text}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 CONTACTO -->
+    <section id="contacto" class="section" aria-labelledby="contacto-titulo">
+      <div class="shell">
+        <div class="contact-frame reveal">
+        <div class="contact">
+          <p class="eyebrow"><span aria-hidden="true">07 //</span> Contacto</p>
+          <h2 class="display" id="contacto-titulo">{contacto.title}</h2>
+          <p class="lead">{contacto.lead}</p>
+          <div class="contact-actions">
+            <a class="btn btn--primary" href={mailto} aria-label={`Escribir a AVX por correo a ${site.email}`}>{contacto.cta} <span class="arrow" aria-hidden="true">→</span></a>
+            <button class="btn btn--ghost copy" type="button" data-copy={site.email}>Copiar correo</button>
+          </div>
+          <p class="contact-mail"><a href={`mailto:${site.email}`}>{site.email}</a></p>
+          <p class="contact-hint">{contacto.hint} <span class="sr-only" aria-live="polite" data-copy-status></span></p>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LAB -->
+    <section class="lab" aria-labelledby="lab-titulo">
+      <div class="shell">
+        <a class="lab-card reveal" href={lab.href}>
+          <div class="lab-inner">
+          <div>
+            <p class="lab-eyebrow"><span aria-hidden="true">LAB //</span> Vector Field</p>
+            <h2 id="lab-titulo">{lab.title}</h2>
+            <p>{lab.lead}</p>
+          </div>
+          <span class="lab-cta">{lab.cta} <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .num { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.18em; color: var(--accent); }
+
+  /* Tarjetas */
+  .grid-4, .grid-3 { display: grid; gap: 1rem; }
+  .grid-4 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .cut-card:hover { background: rgba(125, 233, 255, 0.55); transform: translateY(-2px); }
+  .card { display: flex; flex-direction: column; gap: 0.9rem; padding: 1.75rem 1.6rem 2rem; min-height: 13rem; }
+  .card .num { display: flex; align-items: center; gap: 0.8rem; }
+  .card .num::after { content: ""; flex: 1; height: 1px; background: var(--line); transition: background 0.25s; }
+  .cut-card:hover .num::after { background: var(--accent); }
+  .card h3 { font-weight: 600; font-size: 1.25rem; line-height: 1.2; margin-top: auto; }
+  .card p { color: var(--text-2); font-size: 0.98rem; line-height: 1.5; }
+  @media (max-width: 600px) {
+    .card { min-height: 0; padding: 1.4rem 1.4rem 1.6rem; gap: 0.6rem; }
+    .card h3 { margin-top: 0.4rem; }
+  }
+
+  /* Incluye / No prometemos */
+  .terms {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem 3rem;
+    margin-top: 2.5rem; padding-top: 2.25rem; border-top: 1px solid var(--line);
+  }
+  .terms-title { font-family: var(--mono); font-weight: 400; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-2); margin-bottom: 1rem; }
+  .terms-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .terms-list li {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.45rem 0.8rem; border: 1px solid var(--line); font-size: 0.92rem;
+  }
+  .mark { font-family: var(--mono); }
+  .mark.yes { color: var(--accent); }
+  .mark.no { color: var(--text-2); }
+  .terms-close { grid-column: 1 / -1; font-weight: 700; font-size: clamp(1.15rem, 2vw, 1.4rem); }
+
+  /* Audiencias */
+  .audiences { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); border-top: 1px solid var(--line-strong); }
+  .audience { padding: 2rem 2rem 0 0; display: grid; gap: 0.8rem; align-content: start; }
+  .audience + .audience { padding-left: 2rem; border-left: 1px solid var(--line); }
+  .audience h3 { font-weight: 800; font-size: clamp(1.6rem, 2.6vw, 2.1rem); line-height: 1.05; letter-spacing: -0.01em; }
+  .audience p { color: var(--text-2); max-width: 30ch; }
+  @media (max-width: 860px) {
+    .audience, .audience + .audience { padding: 1.75rem 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  }
+
+  /* Propiedad */
+  .ownership { background: linear-gradient(180deg, transparent, rgba(125, 233, 255, 0.03)), var(--bg); overflow: hidden; }
+  .ownership-grid { display: grid; gap: 3rem; }
+  @media (min-width: 900px) { .ownership-grid { grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; } }
+  .ownership-statement { display: grid; gap: 1.25rem; position: relative; }
+  .display { font-weight: 800; font-size: clamp(2.8rem, 7vw, 5.4rem); line-height: 0.95; letter-spacing: -0.025em; }
+  .rows { border-top: 1px solid var(--line-strong); }
+  .row { display: grid; gap: 0.25rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line); }
+  .row h3 { font-weight: 600; font-size: 1.2rem; }
+  .row p { color: var(--text-2); }
+  .quote { margin-top: 2rem; font-weight: 700; font-size: clamp(1.3rem, 2.2vw, 1.65rem); line-height: 1.3; }
+
+  /* Trabajos */
+  .works { border-top: 1px solid var(--line-strong); }
+  .work {
+    display: grid; grid-template-columns: 1fr; gap: 0.5rem 1rem; align-items: baseline;
+    padding: 1.9rem 0; border-bottom: 1px solid var(--line); transition: background 0.25s, padding 0.25s var(--ease);
+  }
+  @media (min-width: 860px) { .work { grid-template-columns: 1fr 1.1fr; gap: 2rem; } }
+  .work:hover { background: linear-gradient(90deg, rgba(125, 233, 255, 0.05), transparent 70%); }
+  .work-tag { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-2); margin-bottom: 0.35rem; }
+  .work h3 { font-weight: 800; font-size: clamp(1.6rem, 3.2vw, 2.4rem); line-height: 1.05; letter-spacing: -0.015em; }
+  .work-text { color: var(--text-2); }
+
+  /* Proceso */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; position: relative; }
+  .step { display: grid; gap: 0.75rem; position: relative; padding-top: 3.75rem; }
+  .step::before { content: ""; position: absolute; top: 1.2rem; left: 3rem; right: -2rem; height: 1px; background: linear-gradient(90deg, var(--accent), var(--line) 60%); opacity: 0.6; }
+  .step:last-child::before { display: none; }
+  .step-node {
+    position: absolute; top: 0; left: 0; width: 2.5rem; height: 2.5rem;
+    display: grid; place-items: center; font-family: var(--mono); font-size: 0.75rem; color: var(--accent);
+    border: 1px solid rgba(125, 233, 255, 0.55); clip-path: var(--clip); background: var(--surface);
+  }
+  .step h3 { font-weight: 700; font-size: 1.35rem; }
+  .step p { color: var(--text-2); }
+  @media (max-width: 900px) { .step::before { display: none; } }
+
+  /* Capacidad */
+  .capacity-note { margin-top: 1.25rem; font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-2); }
+  .grid-quiet .cut-inner { background: var(--bg); }
+  .product {
+    margin-top: 2.5rem; padding: clamp(1.75rem, 4vw, 2.5rem); display: grid; gap: 0.75rem;
+    border: 1px dashed var(--line-strong);
+  }
+  .product h3 { font-weight: 800; font-size: clamp(1.5rem, 2.6vw, 2rem); }
+  .product p { color: var(--text-2); max-width: 52ch; }
+  .badge {
+    justify-self: start; display: inline-flex; align-items: center; gap: 0.55rem;
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--steel-blue); border: 1px solid rgba(168, 197, 229, 0.4); padding: 0.35rem 0.7rem;
+  }
+  .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--steel-blue); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: 0.25; } }
+
+  /* Contacto */
+  .contact-frame { --cut: 28px; clip-path: var(--clip); padding: 1px; background: rgba(125, 233, 255, 0.35); }
+  .contact {
+    --cut: 28px; clip-path: var(--clip);
+    position: relative; display: grid; gap: 1.4rem; justify-items: start;
+    padding: clamp(2rem, 6vw, 4.5rem);
+    background: radial-gradient(ellipse 70% 90% at 100% 0%, rgba(125, 233, 255, 0.09), transparent 60%), var(--surface);
+    overflow: hidden;
+  }
+  .contact { --btn-bg: var(--surface); }
+  .contact .btn { --cut: 12px; }
+  .contact .display { max-width: 14ch; font-size: clamp(3rem, 8vw, 6.2rem); }
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 0.5rem; }
+  .copy { cursor: pointer; border: 0; }
+  .contact-mail { font-family: var(--mono); font-size: 1rem; letter-spacing: 0.06em; }
+  .contact-mail a { border-bottom: 1px solid var(--line-strong); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+  .contact-mail a:hover { color: var(--accent); border-color: var(--accent); }
+  .contact-hint { color: var(--text-2); font-size: 0.9rem; }
+  @media (max-width: 600px) { .contact-actions, .contact-actions .btn { width: 100%; } }
+
+  /* Laboratorio */
+  .lab { padding-bottom: var(--section); }
+  .lab-card {
+    display: block; padding: 1px; clip-path: var(--clip);
+    background: rgba(0, 255, 136, 0.4); transition: background 0.25s;
+  }
+  .lab-inner {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem 3rem;
+    padding: clamp(1.75rem, 4vw, 2.75rem); clip-path: var(--clip);
+    background: repeating-linear-gradient(0deg, rgba(0, 255, 136, 0.035) 0 1px, transparent 1px 4px), var(--lab-bg);
+    transition: box-shadow 0.25s;
+  }
+  .lab-card:hover { background: var(--lab); }
+  .lab-card:hover .lab-inner { box-shadow: inset 0 0 40px rgba(0, 255, 136, 0.08); }
+  .lab-eyebrow { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lab); margin-bottom: 0.75rem; }
+  .lab-card h2 { font-family: var(--mono); font-weight: 400; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: 0.04em; text-transform: uppercase; color: #e8f4f0; text-shadow: 0 0 18px rgba(0, 255, 136, 0.35); }
+  .lab-card p { color: #7b9ea8; margin-top: 0.4rem; font-size: 0.98rem; }
+  .lab-cta { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lab); }
+  .lab-card:hover .lab-cta { text-shadow: 0 0 12px rgba(0, 255, 136, 0.6); }
+</style>
+
+<script>
+  // Revelado al entrar en pantalla (una vez)
+  const items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
+    items.forEach((el) => io.observe(el));
+  } else {
+    items.forEach((el) => el.classList.add('is-in'));
+  }
+
+  // Copiar correo
+  const copyBtn = document.querySelector<HTMLButtonElement>('[data-copy]');
+  const status = document.querySelector('[data-copy-status]');
+  copyBtn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(copyBtn.dataset.copy ?? '');
+      copyBtn.textContent = 'Correo copiado';
+      if (status) status.textContent = 'Correo copiado';
+      setTimeout(() => { copyBtn.textContent = 'Copiar correo'; }, 2200);
+    } catch {
+      if (status) status.textContent = 'No se pudo copiar; el correo está escrito abajo.';
+    }
+  });
+</script>
